@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentFlow - Login</title>
+    <!-- Google Fonts (Inter) & Font Awesome icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="light-mode">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="login-page" class="login-page">
+        <div class="login-container">
+            <div class="login-left">
+                <div class="login-brand">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>StudentFlow</span>
+                </div>
+                <h1>Welcome back!</h1>
+                <p>Sign in to access your student management dashboard</p>
+
+                <div class="login-features">
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <span>Manage Students</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Track Attendance</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Generate Reports</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-right">
+                <div class="login-form-container">
+                    <h2>Sign In</h2>
+                    <form id="login-form">
+                        <div class="input-group">
+                            <label for="username">Username</label>
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="username" placeholder="admin" value="admin">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <div class="input-icon password-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" placeholder="••••••••" value="admin123">
+                                <button type="button" class="password-toggle" id="togglePassword" tabindex="-1">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="login-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                    </form>
+                    <div class="login-demo">
+                        <p><i class="fas fa-info-circle"></i> Demo credentials: admin / admin123</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD (Initially Hidden) -->
+    <div id="admin-dashboard" class="app-container" style="display: none;">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="logo-text">StudentFlow</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-page="dashboard"><i class="fas fa-th-large"></i> <span>Dashboard</span></li>
+                    <li data-page="add-student"><i class="fas fa-user-plus"></i> <span>Add Student</span></li>
+                    <li data-page="manage-students"><i class="fas fa-users"></i> <span>Manage Students</span></li>
+                    <li data-page="reports"><i class="fas fa-chart-bar"></i> <span>Reports</span></li>
+                    <li data-page="settings"><i class="fas fa-cog"></i> <span>Settings</span></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <i class="fas fa-moon" id="darkmode-toggle"></i>
+                <span class="version">SMS</span>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <!-- TOP NAVBAR with search + profile + logout -->
+            <header class="top-navbar">
+                <div class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></div>
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search students, courses..." id="global-search">
+                </div>
+                <div class="profile-area">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff&size=40"
+                        alt="profile" class="profile-pic">
+                    <span class="admin-name">Admin</span>
+                    <button class="logout-btn" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- DASHBOARD VIEW -->
+            <div id="dashboard-view" class="view active-view">
+                <!-- cards -->
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon blue"><i class="fas fa-user-graduate"></i></div>
+                        <div class="card-info">
+                            <span class="label">Total Students</span>
+                            <span class="value" id="total-students">248</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon indigo"><i class="fas fa-user-check"></i></div>
+                        <div class="card-info">
+                            <span class="label">Active Students</span>
+                            <span class="value" id="active-students">212</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon purple"><i class="fas fa-book-open"></i></div>
+                        <div class="card-info">
+                            <span class="label">Courses</span>
+                            <span class="value">12</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon green"><i class="fas fa-chart-line"></i></div>
+                        <div class="card-info">
+                            <span class="label">Attendance %</span>
+                            <span class="value">94%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- quick student table preview (dashboard) -->
+                <div class="table-container">
+                    <h3>Recent students <button class="btn-link" id="goto-manage">Manage all <i
+                                class="fas fa-arrow-right"></i></button></h3>
+                    <div class="table-responsive">
+                        <table class="student-table" id="dashboard-student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADD STUDENT VIEW -->
+            <div id="add-student-view" class="view">
+                <div class="form-card">
+                    <h2><i class="fas fa-user-plus"></i> Add new student</h2>
+                    <form id="add-student-form" novalidate>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Full name *</label>
+                                <input type="text" id="fullname" placeholder="e.g., Alex Johnson">
+                                <div class="error-message" id="error-name"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Email *</label>
+                                <input type="email" id="email" placeholder="alex@example.com">
+                                <div class="error-message" id="error-email"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Course</label>
+                                <input type="text" id="course" placeholder="e.g., Computer Science"
+                                    value="Computer Science">
+                            </div>
+                            <div class="input-group">
+                                <label>Status</label>
+                                <select id="status">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Add student</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- MANAGE STUDENTS VIEW -->
+            <div id="manage-students-view" class="view">
+                <div class="table-container">
+                    <div class="table-header-actions">
+                        <h3>All students</h3>
+                        <div class="search-filter">
+                            <i class="fas fa-filter"></i>
+                            <input type="text" id="manage-search" placeholder="Filter by name or email">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="student-table" id="manage-student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Course</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!-- pagination -->
+                    <div class="pagination" id="pagination-controls">
+                        <button class="page-prev" disabled><i class="fas fa-chevron-left"></i></button>
+                        <span class="page-info">Page <span id="current-page">1</span> of <span
+                                id="total-pages">1</span></span>
+                        <button class="page-next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORTS VIEW placeholder -->
+            <div id="reports-view" class="view">
+                <div class="placeholder-panel"><i class="fas fa-chart-pie"></i> Reports – demo content</div>
+            </div>
+            <!-- SETTINGS VIEW placeholder -->
+            <div id="settings-view" class="view">
+                <div class="placeholder-panel"><i class="fas fa-sliders-h"></i> Settings – dark mode toggle works from
+                    sidebar</div>
+            </div>
+
+            <!-- MODAL for editing -->
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h3>Edit student</h3>
+                    <form id="edit-student-form">
+                        <input type="hidden" id="edit-id">
+                        <div class="input-group">
+                            <label>Full name</label>
+                            <input type="text" id="edit-name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" id="edit-email" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Course</label>
+                            <input type="text" id="edit-course">
+                        </div>
+                        <div class="input-group">
+                            <label>Status</label>
+                            <select id="edit-status">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Update student</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
